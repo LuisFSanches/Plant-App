@@ -39,6 +39,29 @@ const Home = () => {
     },
   ]);
 
+  const [friendList, setFriendList] = React.useState([
+    {
+      id: 0,
+      img: images.profile1,
+    },
+    {
+      id: 1,
+      img: images.profile2,
+    },
+    {
+      id: 2,
+      img: images.profile3,
+    },
+    //{
+    //  id: 3,
+    //  img: images.profile4,
+    // },
+    //{
+    // id: 4,
+    // img: images.profile5,
+    //},
+  ]);
+
   //Render
   function renderNewPlants(item, index) {
     return (
@@ -91,10 +114,57 @@ const Home = () => {
     );
   }
 
+  function renderFriendsComponent() {
+    if (friendList.length == 0) {
+      return <View></View>;
+    } else if (friendList.length <= 3) {
+      return friendList.map((item, index) => (
+        <View
+          key={`friend- ${index}`}
+          style={index == 0 ? {} : {marginLeft: -20}}>
+          <Image
+            source={item.img}
+            resizeMode="cover"
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+              borderWidth: 3,
+              borderColor: COLORS.primary,
+            }}
+          />
+        </View>
+      ));
+    } else {
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        {friendList.map((item, index) => {
+          if (index <= 2) {
+            return (
+              <View key={`friend- ${index}`}>
+                <Image
+                  source={item.img}
+                  resizeMode="cover"
+                  style={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: 25,
+                    borderWidth: 3,
+                    borderColor: COLORS.primary,
+                  }}
+                />
+              </View>
+            );
+          }
+        })}
+        <Text>+{friendList.length - 3} More</Text>
+      </View>;
+    }
+  }
+
   return (
     <View style={styles.container}>
       {/* New Plants */}
-      <View style={{height: '35%', backgroundColor: COLORS.whie}}>
+      <View style={{height: '28%', backgroundColor: COLORS.whie}}>
         <View
           style={{
             flex: 1,
@@ -104,7 +174,7 @@ const Home = () => {
           }}>
           <View
             style={{
-              marginTop: SIZES.padding * 0.5,
+              marginTop: SIZES.padding * 0.3,
               marginHorizontal: SIZES.padding,
             }}>
             <View
@@ -145,10 +215,149 @@ const Home = () => {
       </View>
 
       {/* Today's Share */}
-      <View style={{height: '50%', backgroundColor: COLORS.lightGray}}></View>
+      <View style={{height: '48%', backgroundColor: COLORS.lightGray}}>
+        <View
+          style={{
+            flex: 1,
+            borderBottomLeftRadius: 50,
+            borderBottomRightRadius: 50,
+            backgroundColor: COLORS.white,
+          }}>
+          <View
+            style={{
+              marginTop: SIZES.font,
+              marginHorizontal: SIZES.padding,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
+              <Text
+                style={{
+                  color: COLORS.secondary,
+                  ...FONTS.h2,
+                }}>
+                Today's Share
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  console.log('See All on pressed');
+                }}>
+                <Text
+                  style={{
+                    color: COLORS.secondary,
+                    ...FONTS.body3,
+                  }}>
+                  See All
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <View
+              style={{
+                flexDirection: 'row',
+                height: '85%',
+                marginTop: SIZES.base,
+              }}>
+              <View style={{flex: 1}}>
+                <TouchableOpacity
+                  style={{flex: 1}}
+                  onPress={() => {
+                    console.log('Plant on pressed');
+                  }}>
+                  <Image
+                    source={images.plant5}
+                    resizeMode="cover"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: 20,
+                    }}
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{flex: 1, marginTop: SIZES.font}}
+                  onPress={() => {
+                    console.log('Plant on pressed');
+                  }}>
+                  <Image
+                    source={images.plant6}
+                    resizeMode="cover"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: 20,
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View style={{flex: 1.3}}>
+                <TouchableOpacity
+                  style={{flex: 1, marginLeft: SIZES.font}}
+                  onPress={() => {
+                    console.log('Plant on pressed');
+                  }}>
+                  <Image
+                    source={images.plant7}
+                    resizeMode="cover"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: 20,
+                    }}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
 
       {/* Added Friend */}
-      <View style={{height: '20%', backgroundColor: COLORS.lightGray}}></View>
+      <View style={{height: '19%', backgroundColor: COLORS.lightGray}}>
+        <View style={{flex: 1, backgroundColor: COLORS.lightGray}}>
+          <View
+            style={{
+              marginTop: SIZES.radius,
+              marginHorizontal: SIZES.padding,
+            }}>
+            <Text style={{color: COLORS.secondary, ...FONTS.h2}}>
+              Added Friends
+            </Text>
+            <Text style={{color: COLORS.secondary, ...FONTS.body3}}>
+              {friendList.length} Total
+            </Text>
+            <View style={{flexDirection: 'row', height: '60%'}}>
+              {/* Friends */}
+              <View
+                style={{
+                  flex: 1.3,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  backgroundColor: 'yellow',
+                }}>
+                {renderFriendsComponent()}
+              </View>
+
+              {/* Add Friends */}
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'flex-end',
+                  backgroundColor: 'red',
+                }}>
+                <Text>Add New</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   );
 };
