@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 
 import {icons, images, COLORS, SIZES, FONTS} from '../constants';
-
-const Home = () => {
+import {NavigationContainer} from '@react-navigation/native';
+const Home = ({navigation}) => {
   //Dummy Data
   const [newPlants, setNewPlants] = React.useState([
     {
@@ -52,14 +52,14 @@ const Home = () => {
       id: 2,
       img: images.profile3,
     },
-    //{
-    //  id: 3,
-    //  img: images.profile4,
-    // },
-    //{
-    // id: 4,
-    // img: images.profile5,
-    //},
+    {
+      id: 3,
+      img: images.profile4,
+    },
+    {
+      id: 4,
+      img: images.profile5,
+    },
   ]);
 
   //Render
@@ -136,28 +136,35 @@ const Home = () => {
         </View>
       ));
     } else {
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        {friendList.map((item, index) => {
-          if (index <= 2) {
-            return (
-              <View key={`friend- ${index}`}>
-                <Image
-                  source={item.img}
-                  resizeMode="cover"
-                  style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: 25,
-                    borderWidth: 3,
-                    borderColor: COLORS.primary,
-                  }}
-                />
-              </View>
-            );
-          }
-        })}
-        <Text>+{friendList.length - 3} More</Text>
-      </View>;
+      return (
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          {friendList.map((item, index) => {
+            if (index <= 2) {
+              return (
+                <View
+                  key={`friend- ${index}`}
+                  style={index == 0 ? {} : {marginLeft: -20}}>
+                  <Image
+                    source={item.img}
+                    resizeMode="cover"
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 25,
+                      borderWidth: 3,
+                      borderColor: COLORS.primary,
+                    }}
+                  />
+                </View>
+              );
+            }
+          })}
+          <Text
+            style={{marginLeft: 5, color: COLORS.secondary, ...FONTS.body3}}>
+            +{friendList.length - 3} More
+          </Text>
+        </View>
+      );
     }
   }
 
@@ -265,7 +272,7 @@ const Home = () => {
                 <TouchableOpacity
                   style={{flex: 1}}
                   onPress={() => {
-                    console.log('Plant on pressed');
+                    navigation.navigate('PlantDetail');
                   }}>
                   <Image
                     source={images.plant5}
@@ -281,7 +288,7 @@ const Home = () => {
                 <TouchableOpacity
                   style={{flex: 1, marginTop: SIZES.font}}
                   onPress={() => {
-                    console.log('Plant on pressed');
+                    navigation.navigate('PlantDetail');
                   }}>
                   <Image
                     source={images.plant6}
@@ -299,7 +306,7 @@ const Home = () => {
                 <TouchableOpacity
                   style={{flex: 1, marginLeft: SIZES.font}}
                   onPress={() => {
-                    console.log('Plant on pressed');
+                    navigation.navigate('PlantDetail');
                   }}>
                   <Image
                     source={images.plant7}
@@ -338,7 +345,6 @@ const Home = () => {
                   flex: 1.3,
                   flexDirection: 'row',
                   alignItems: 'center',
-                  backgroundColor: 'yellow',
                 }}>
                 {renderFriendsComponent()}
               </View>
@@ -350,9 +356,29 @@ const Home = () => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'flex-end',
-                  backgroundColor: 'red',
                 }}>
-                <Text>Add New</Text>
+                <Text style={{color: COLORS.secondary, ...FONTS.body3}}>
+                  Add New
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    marginLeft: SIZES.base,
+                    width: 40,
+                    height: 40,
+                    borderRadius: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: COLORS.gray,
+                  }}
+                  onPress={() => {
+                    console.log('Add friend on pressed');
+                  }}>
+                  <Image
+                    source={icons.plus}
+                    resizeMode="contain"
+                    style={{width: 20, height: 20}}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
           </View>

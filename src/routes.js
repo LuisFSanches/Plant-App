@@ -16,6 +16,7 @@ export default function Routes() {
       screenOptions={{headerShown: false}}
       initialRouteName={'Home'}>
       <Stack.Screen name="Home" component={Tabs} />
+      <Stack.Screen name="PlantDetail" component={PlantDetail} />
     </Stack.Navigator>
   );
 }

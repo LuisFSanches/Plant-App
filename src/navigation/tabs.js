@@ -7,6 +7,7 @@ import {icons, COLORS} from '../constants';
 
 //Screens
 import Home from '../pages/Home';
+import PlantDetail from '../pages/PlantDetail';
 
 const Tab = createBottomTabNavigator();
 
